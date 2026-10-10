@@ -1,0 +1,12 @@
+# Render Blueprint：在 Render 選 New → Blueprint，連到這個 GitHub repo 即可一鍵部署
+services:
+  - type: web
+    name: holdem
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "22"

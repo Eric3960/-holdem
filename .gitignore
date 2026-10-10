@@ -1,0 +1,5 @@
+node_modules
+dist
+*.log
+# 參考用的介面截圖（Envato 浮水印素材），不放進版本庫
+images*.jpg
