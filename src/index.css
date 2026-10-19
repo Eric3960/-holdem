@@ -47,3 +47,11 @@ body {
   80% { stroke: #f97316; }
   100% { stroke-dashoffset: 100; stroke: #ef4444; }
 }
+
+/* 時間銀行：藍色倒數 */
+.turn-timer-ring.bank { animation-name: bank-countdown; }
+@keyframes bank-countdown {
+  0% { stroke-dashoffset: 0; stroke: #38bdf8; }
+  80% { stroke: #818cf8; }
+  100% { stroke-dashoffset: 100; stroke: #ef4444; }
+}
