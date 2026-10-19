@@ -25,9 +25,10 @@ interface Props {
   onToggleAway: () => void;
   felt: string;
   onFelt: () => void;
+  controls?: React.ReactNode;
 }
 
-export default function InfoBar({ view, now, connected, onToggleSide, onToggleAway, felt, onFelt }: Props) {
+export default function InfoBar({ view, now, connected, onToggleSide, onToggleAway, felt, onFelt, controls }: Props) {
   const t = view.tournament;
   const lv = t.level;
   const scale = t.timeScale;
@@ -56,6 +57,7 @@ export default function InfoBar({ view, now, connected, onToggleSide, onToggleAw
               {me.away ? '回座' : '離席'}
             </button>
           )}
+          {controls}
           <button type="button" onClick={onFelt} className="rounded-md bg-white/10 px-2 py-1.5 ring-1 ring-white/15" aria-label="切換桌布顏色">
             <span className={`block h-3 w-3 rounded-full ${felt === 'green' ? 'bg-emerald-500' : 'bg-blue-600'}`} />
           </button>

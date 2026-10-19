@@ -56,7 +56,7 @@ function NumberSetting({ label, unit, value, k, disabled, onChange }: { label: s
   );
 }
 
-export default function RoomLobby({ view, api }: { view: TableView; api: RoomApi }) {
+export default function RoomLobby({ view, api, controls }: { view: TableView; api: RoomApi; controls?: React.ReactNode }) {
   const { settings } = view.tournament;
   const host = view.isHost;
   const set = (patch: Partial<RoomSettings>) => api.updateSettings(patch);
@@ -67,7 +67,8 @@ export default function RoomLobby({ view, api }: { view: TableView; api: RoomApi
     <div className="h-full overflow-y-auto bg-[radial-gradient(ellipse_at_top,#14532d,#020617_70%)] px-4 py-6">
       <div className="mx-auto grid max-w-3xl gap-4 desk:grid-cols-2">
         <section className="space-y-4 rounded-3xl bg-slate-900/85 p-5 ring-1 ring-white/10">
-          <div>
+          <div className="relative">
+            <div className="absolute top-0 right-0 text-sm">{controls}</div>
             <div className="text-xs tracking-wide text-white/50">房間代碼</div>
             <div className="font-mono text-4xl font-black tracking-[0.25em] text-amber-300">{view.code}</div>
           </div>

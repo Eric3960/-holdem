@@ -10,11 +10,14 @@ import FinalResults from './components/FinalResults';
 import { lastRoom, loadProfile, useRoom, useServerNow, type RoomApi } from './hooks/useRoom';
 import { bestHand, handName } from '../shared/handEvaluator';
 import type { TableView } from '../shared/types';
+import SoundControls from './components/SoundControls';
+import { useAudioPrefs, useGameSounds } from './audio/useAudio';
 
-function GameScreen({ view, api }: { view: TableView; api: RoomApi }) {
+function GameScreen({ view, api, controls }: { view: TableView; api: RoomApi; controls: React.ReactNode }) {
   const [felt, setFelt] = useState('green');
   const [sideOpen, setSideOpen] = useState(false);
   const now = useServerNow(api.clockOffset, 500);
+  useGameSounds(view, now);
   const me = view.players[view.mySeat];
   const board = view.hand?.board ?? [];
   const myCards = me?.cards.filter((c): c is string => !!c) ?? [];
@@ -30,6 +33,7 @@ function GameScreen({ view, api }: { view: TableView; api: RoomApi }) {
         onToggleAway={() => me && api.setAway(!me.away)}
         felt={felt}
         onFelt={() => setFelt((f) => (f === 'green' ? 'blue' : 'green'))}
+        controls={controls}
       />
 
       <div className="flex min-h-0 flex-1">
@@ -64,6 +68,8 @@ function GameScreen({ view, api }: { view: TableView; api: RoomApi }) {
 
 export default function App() {
   const api = useRoom();
+  const sound = useAudioPrefs();
+  const controls = <SoundControls prefs={sound.prefs} onChange={sound.update} />;
   const urlCode = new URLSearchParams(location.search).get('room')?.toUpperCase() ?? null;
   const [autoJoined, setAutoJoined] = useState(false);
 
@@ -79,7 +85,7 @@ export default function App() {
 
   return (
     <>
-      {view.tournament.status === 'lobby' ? <RoomLobby view={view} api={api} /> : <GameScreen view={view} api={api} />}
+      {view.tournament.status === 'lobby' ? <RoomLobby view={view} api={api} controls={controls} /> : <GameScreen view={view} api={api} controls={controls} />}
       {api.error && (
         <div className="fixed top-14 left-1/2 z-[60] -translate-x-1/2 animate-pop-in rounded-xl bg-rose-600 px-4 py-2 text-sm font-semibold shadow-xl">{api.error}</div>
       )}
