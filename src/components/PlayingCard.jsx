@@ -9,7 +9,7 @@ const SIZE = {
 };
 
 // card 為 null 時顯示牌背，例如 'Ah'、'Td'
-export default function PlayingCard({ card, size = 'md', dim = false, className = '', style }) {
+export default function PlayingCard({ card, size = 'md', dim = false, className = '', style = undefined }) {
   const base = `relative w-[2.5em] h-[3.5em] shrink-0 rounded-[0.28em] shadow-[0_0.15em_0.4em_rgb(0_0_0/0.45)] ${SIZE[size]} ${className}`;
 
   if (!card) {
